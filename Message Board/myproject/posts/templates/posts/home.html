@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message Board</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2196f3 0%, #9c27b0 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 8px;
+            font-weight: normal;
+        }
+        
+        .header p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .post {
+            background: linear-gradient(135deg, #f8f9ff 0%, #fff8f8 100%);
+            border: 1px solid #e3f2fd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #2196f3;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .post:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(33, 150, 243, 0.1);
+        }
+        
+        .post:last-child {
+            margin-bottom: 0;
+        }
+        
+        .post-text {
+            font-size: 16px;
+            color: #424242;
+            margin-bottom: 15px;
+        }
+        
+        .post-date {
+            font-size: 14px;
+            color: #757575;
+            border-top: 1px solid #e8eaf6;
+            padding-top: 10px;
+        }
+        
+        .no-posts {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+            background: linear-gradient(135deg, #f8f9ff 0%, #fff8f8 100%);
+            border-radius: 8px;
+            border: 2px dashed #e3f2fd;
+        }
+        
+        .no-posts h3 {
+            margin-bottom: 10px;
+            color: #2196f3;
+            font-size: 1.4rem;
+        }
+        
+        .admin-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #4caf50 0%, #2196f3 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .admin-link:hover {
+            background: linear-gradient(135deg, #45a049 0%, #1976d2 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+        }
+        
+        .footer {
+            background: linear-gradient(135deg, #f8f9ff 0%, #fff8f8 100%);
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid #e3f2fd;
+        }
+        
+        .post-count {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+            text-align: center;
+            background: linear-gradient(135deg, #e8f5e8 0%, #e3f2fd 100%);
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #c8e6c9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Message Board</h1>
+            <p>Community Messages</p>
+        </div>
+        
+        <div class="content">
+            {% if posts %}
+                <div class="post-count">
+                    {{ posts|length }} message{{ posts|length|pluralize }}
+                </div>
+                
+                {% for post in posts %}
+                    <div class="post">
+                        <div class="post-text">{{ post.text|linebreaks }}</div>
+                        <div class="post-date">
+                            {{ post.created_at|date:"F j, Y g:i A" }}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="no-posts">
+                    <h3>No Messages Yet</h3>
+                    <p>Be the first to post a message!</p>
+                    <a href="/admin/" class="admin-link">Add Message</a>
+                </div>
+            {% endif %}
+        </div>
+        
+        <div class="footer">
+            <a href="/admin/" class="admin-link">Admin Panel</a>
+        </div>
+    </div>
+</body>
+</html>
