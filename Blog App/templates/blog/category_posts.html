@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ category.name }} - Advanced Blog{% endblock %}
+{% block title %}{{ category.name }} - TechPulse{% endblock %}
 
 {% block content %}
 <div class="gradient-bg text-white py-16">
@@ -20,15 +20,20 @@
     {% if page_obj %}
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         {% for post in page_obj %}
-        <article class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
-            {% if post.featured_image %}
-                <img src="{{ post.featured_image.url }}" alt="{{ post.title }}" class="w-full h-48 object-cover">
-            {% else %}
-                <div class="w-full h-48 card-gradient flex items-center justify-center">
-                    <i class="fas fa-image text-gray-400 text-6xl"></i>
-                </div>
-            {% endif %}
-            <div class="p-6">
+        <article class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2" style="display: flex; flex-direction: column; justify-content: space-between;">
+            <!-- Image Section -->
+            <div class="post-image">
+                {% if post.featured_image %}
+                    <img src="{{ post.featured_image.url }}" alt="{{ post.title }}" class="w-full h-48 object-cover">
+                {% else %}
+                    <div class="w-full h-48 card-gradient flex items-center justify-center">
+                        <i class="fas fa-image text-gray-400 text-6xl"></i>
+                    </div>
+                {% endif %}
+            </div>
+            
+            <!-- Details Section -->
+            <div class="post-details p-6 flex-grow">
                 <div class="flex items-center justify-between mb-3">
                     <span class="text-gray-500 text-sm">
                         <i class="fas fa-calendar"></i> {{ post.created_at|date:"M d, Y" }}
@@ -43,7 +48,10 @@
                 </h3>
                 
                 <p class="text-gray-600 mb-4">{{ post.excerpt|truncatewords:15 }}</p>
-                
+            </div>
+            
+            <!-- Bottom Section -->
+            <div class="post-bottom p-6 pt-0">
                 <div class="flex items-center justify-between pt-4 border-t border-gray-200">
                     <div class="flex items-center">
                         <i class="fas fa-user-circle text-purple-600 text-2xl mr-2"></i>
